@@ -1,0 +1,18 @@
+
+- Cleanup
+- Create setup.py
+- Check it works on >django-1.0
+- Add (correct) transaction protection around database access
+- Write admin support for history tables
+- Automatically register pre_save hooks/magic
+- Use more django-like syntax, eg: History.site.register(SomeModel) ?
+  though we still want to have (at the very least optionally) an explicitly
+  declarated model which is the history table for SomeModel.
+
+- Do we need to look at foreignkeys/manytomany/relational fields ?
+  For instance, that we need to explicitly hook them onto (or only support?)
+  the history table for that relation. Because the orgininal relation can
+  (and should be able to) disappear while not having to cascade delete the
+  item in the history table.
+
+- Support migrations (South/dbmigrations/et al)
