@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.base import ModelBase
 from django.utils.translation import ugettext_lazy as _
 #from django.contrib.auth.models import User
+from django_history_tables.managers import HistoryModelManager
 
 import copy
 import datetime
@@ -54,6 +55,8 @@ class HistoryModelBase(ModelBase):
                     rel.through = rel.through + "History"
                 else:
                     new_class.add_to_class(_mm.name, _mm)
+            # insert new class into original object for backreference
+            history_model.add_to_class("history_model", new_class)
         return new_class
     
 class HistoryModel(models.Model):
@@ -68,6 +71,11 @@ class HistoryModel(models.Model):
 #    def pre_save(self, request):
 #        if not self.id:
 #            self.history_operatedby = request.user
+
+    def __unicode__(self):
+        return u"<history revision=%s>" % self.history_revision
+
+    objects = HistoryModelManager()
     
     class Meta:
         abstract = True

@@ -16,3 +16,4 @@
   item in the history table.
 
 - Support migrations (South/dbmigrations/et al)
+

@@ -1,1 +1,2 @@
 ^(.*)\.py[co]$
+^examples\/simple\/simple\.db$

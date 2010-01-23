@@ -1,7 +1,7 @@
 ## TODO: update for django 1.0+
 
 from django.db import models
-from django_history_tables import HistoryModel
+from django_history_tables import HistoryModel, HistoryManager, history_save
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=64, default="VW")
@@ -26,6 +26,9 @@ class Car(models.Model):
     slug = models.SlugField(unique=True)
     desc = models.TextField()
 
+    objects = models.Manager()
+    history = HistoryManager()
+
     def __unicode__(self):
         return u"<car foo=%s bar=%s maker=%s colors=%s slug=%s>" % (self.foo, self.bar, self.maker, self.colors, self.slug)
 
@@ -37,7 +40,7 @@ class CarHistory(HistoryModel):
         model = Car
 
     def __unicode__(self):
-        return u"<carhistory revision=%s>" % self.history_revision)
+        return u"<carhistory revision=%s>" % self.history_revision
 
     class Admin:
         pass
